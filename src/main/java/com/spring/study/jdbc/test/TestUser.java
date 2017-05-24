@@ -7,7 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.spring.study.domain.Group;
 import com.spring.study.domain.User;
+import com.spring.study.jdbc.dao.IGroupDao;
 import com.spring.study.jdbc.dao.IUserDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)//让junit运行在spring环境中
@@ -17,10 +19,19 @@ public class TestUser {
 	@Resource(name="userJdbcDao")
 	private IUserDao userJdbcDao;
 	
+	@Resource(name="groupJdbcDao")
+	private IGroupDao groupDao;
+	
 	@Test
 	public void testAdd(){
-		User user = new User(1,"yls",1,"yls","特级管理员");
-		userJdbcDao.add(user);
+		Group group = new Group();
+		group.setName("文章发布员");
+		
+		groupDao.add(group);
+		/*User user = new User(1,"yls",1,"yls","特级管理员");
+		userJdbcDao.add(user);*/
+		User user = new User("悟空",1,"123456","特技员");
+		userJdbcDao.add(user, group.getId());
 	}
 	
 	@Test

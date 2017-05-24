@@ -32,9 +32,9 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
-	public void add(User user) {
-		String sql  = "insert into jdbcuser(username,password,status,descn) value(?,?,?,?)";
-		jdbcTemplate.update(sql, user.getUserName(),user.getPassword(),user.getStatus(),user.getDescn());
+	public void add(User user, int gid) {
+		String sql  = "insert into jdbcuser(username,password,status,descn,gid) value(?,?,?,?,?)";
+		jdbcTemplate.update(sql, user.getUserName(),user.getPassword(),user.getStatus(),user.getDescn(),gid);
 	}
 
 	@Override
