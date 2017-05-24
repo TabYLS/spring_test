@@ -14,7 +14,7 @@ import com.spring.study.jdbc.dao.IUserDao;
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/applicationContext.xml"})//加载配置文件
 public class TestUser {
 	
-	@Resource
+	@Resource(name="userJdbcDao")
 	private IUserDao userJdbcDao;
 	
 	@Test

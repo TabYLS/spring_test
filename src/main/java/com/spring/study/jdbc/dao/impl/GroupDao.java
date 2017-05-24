@@ -12,7 +12,6 @@ import com.spring.study.jdbc.dao.IGroupDao;
 @Repository("groupJdbcDao")
 public class GroupDao implements IGroupDao {
 
-	@Resource
 	private JdbcTemplate jdbcTemplate;
 	
 	/**
