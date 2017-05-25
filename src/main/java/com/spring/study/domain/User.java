@@ -82,4 +82,11 @@ public class User {
 		this.group = group;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", status="
+				+ status + ", password=" + password + ", descn=" + descn
+				+ ", group=" + group + "]";
+	}
+
 }

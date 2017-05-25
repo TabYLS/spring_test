@@ -67,28 +67,43 @@ public class UserDao implements IUserDao {
 		 * 第三参数是一个RowMapper，这个rowMapper可以完成一个对象和数据库字段的对应，实现这个RowMapper需要
 		 * 实现mapRow方法，在mapRow方法中有rs这个参数，通过rs可以有效的获取数据库的字段
 		 */
-		User user = (User)jdbcTemplate.queryForObject(sql, new Object[]{id}, new RowMapper<User>() {
-
-			@Override
-			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Group group = new Group();
-				group.setName(rs.getString("gname"));
-				group.setId(rs.getInt("gid"));
-				User user = new User();
-				user.setGroup(group);
-				user.setUserName(rs.getString("username"));
-				user.setId(rs.getInt("userid"));
-				user.setDescn(rs.getString("descn"));
-				return user;
-			}
-		});
+		User user = (User)jdbcTemplate.queryForObject(sql, new Object[]{id}, new UserMapper());
 		return user;
 	}
 
 	@Override
 	public List<User> list(String sql,  Object[] args) {
-		// TODO Auto-generated method stub
-		return null;
+		//获取整数值(获取行数)
+		String sqlCount = "select count(*) from jdbcuser";
+		int cout = jdbcTemplate.queryForObject(sqlCount, Integer.class);
+		System.out.println(cout);
+		//获取列表值（String类型的列表）
+		String sqlSelectOneNum = "select descn from jdbcuser";
+		List<String> descn = jdbcTemplate.queryForList(sqlSelectOneNum,String.class);
+		for (String string : descn) {
+			System.out.println(string);
+		}
+		
+		return jdbcTemplate.query(sql, args,new UserMapper());
+	}
+	
+	private class UserMapper implements RowMapper<User>{
+
+		@Override
+		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Group group = new Group();
+			group.setName(rs.getString("gname"));
+			group.setId(rs.getInt("gid"));
+			User user = new User();
+			user.setGroup(group);
+			user.setUserName(rs.getString("username"));
+			user.setId(rs.getInt("userid"));
+			user.setPassword(rs.getString("password"));
+			user.setStatus(rs.getInt("status"));
+			user.setDescn(rs.getString("descn"));
+			return user;
+		}
+		
 	}
 
 }
