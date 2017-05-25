@@ -1,13 +1,17 @@
 package com.spring.study.jdbc.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.spring.study.domain.Group;
 import com.spring.study.domain.User;
 import com.spring.study.jdbc.dao.IUserDao;
 
@@ -52,12 +56,37 @@ public class UserDao implements IUserDao {
 
 	@Override
 	public User load(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT u.id userid, u.username, u.descn, g.id gid, g.name gname "
+				+ "FROM jdbcuser u "
+				+ "LEFT JOIN jdbcgroup g "
+				+ "ON g.id = u.gid "
+				+ "WHERE u.id = ?";
+		/**
+		 * 第一个参数是SQL语句
+		 * 第二个参数是SQL语句中的参数值，需要传入一个对象数组（可以传入多个参数）
+		 * 第三参数是一个RowMapper，这个rowMapper可以完成一个对象和数据库字段的对应，实现这个RowMapper需要
+		 * 实现mapRow方法，在mapRow方法中有rs这个参数，通过rs可以有效的获取数据库的字段
+		 */
+		User user = (User)jdbcTemplate.queryForObject(sql, new Object[]{id}, new RowMapper<User>() {
+
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Group group = new Group();
+				group.setName(rs.getString("gname"));
+				group.setId(rs.getInt("gid"));
+				User user = new User();
+				user.setGroup(group);
+				user.setUserName(rs.getString("username"));
+				user.setId(rs.getInt("userid"));
+				user.setDescn(rs.getString("descn"));
+				return user;
+			}
+		});
+		return user;
 	}
 
 	@Override
-	public List<User> list(String sql) {
+	public List<User> list(String sql,  Object[] args) {
 		// TODO Auto-generated method stub
 		return null;
 	}

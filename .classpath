@@ -29,11 +29,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-jdbc-3.2.2.RELEASE.jar" sourcepath="D:/Web框架/spring-framework-3.2.2.RELEASE-dist/spring-framework-3.2.2.RELEASE/libs/spring-jdbc-3.2.2.RELEASE-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-jdbc-3.2.2.RELEASE.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -25,7 +25,7 @@ public class TestUser {
 	@Test
 	public void testAdd(){
 		Group group = new Group();
-		group.setName("文章发布员");
+		group.setName("执法者");
 		
 		groupDao.add(group);
 		/*User user = new User(1,"yls",1,"yls","特级管理员");
@@ -46,6 +46,12 @@ public class TestUser {
 	@Test
 	public void testDelete(){
 		userJdbcDao.delete(5);
+	}
+	
+	@Test
+	public void testLoad(){
+		User user = userJdbcDao.load(10);
+		System.out.println(user.getUserName()+":"+user.getDescn()+"-"+user.getGroup().getName());
 	}
 	
 }
